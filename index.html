@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Long Riche</title>
+<meta name="description" content="Découvrez mes produits et commandez directement par WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lagon:#0E3B43; --lagon-2:#1F7A7A; --ylang:#E8C547;
+  --sable:#F2F7F6; --encre:#10272B; --gris:#5B6F72; --ligne:#D3E1DF;
+  --titre:"Bricolage Grotesque",system-ui,sans-serif;
+  --texte:"Source Serif 4",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--texte);font-size:18px;line-height:1.6;color:var(--encre);background:var(--sable)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ylang);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+header.hero{background:var(--lagon);color:#fff;padding:72px 0 64px}
+.hero h1{font-family:var(--titre);font-weight:800;font-size:clamp(2.8rem,10vw,6rem);line-height:.95;letter-spacing:-.03em;max-width:12ch}
+.hero p{max-width:34ch;margin:22px 0 30px;color:#CFE6E3}
+.btn{display:inline-block;font-family:var(--titre);font-weight:600;font-size:1rem;border:0;border-radius:8px;padding:13px 22px;cursor:pointer;text-decoration:none;background:var(--ylang);color:var(--encre)}
+.btn.sombre{background:var(--lagon);color:#fff}
+.btn.fin{background:transparent;border:2px solid var(--lagon);color:var(--lagon)}
+
+section{padding:56px 0}
+h2{font-family:var(--titre);font-weight:800;font-size:2rem;letter-spacing:-.02em;margin-bottom:24px}
+.grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px}
+.produit{background:#fff;border:1px solid var(--ligne);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.visuel{aspect-ratio:4/3;background:var(--lagon-2);color:#fff;display:grid;place-items:center;font-family:var(--titre);font-weight:800;font-size:3.5rem}
+.visuel img{width:100%;height:100%;object-fit:cover}
+.infos{padding:16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.infos h3{font-family:var(--titre);font-size:1.15rem}
+.infos p{font-size:.95rem;color:var(--gris);flex:1}
+.prix{font-family:var(--titre);font-weight:600}
+.infos .btn{margin-top:8px;text-align:center}
+
+.paiement{background:#fff;border-top:1px solid var(--ligne);border-bottom:1px solid var(--ligne)}
+.paiement ul{padding-left:20px;max-width:60ch}
+.paiement li{margin-bottom:6px}
+
+footer{padding:36px 0 110px;color:var(--gris);font-size:.95rem}
+
+#barre{position:fixed;left:0;right:0;bottom:0;background:var(--lagon);color:#fff;padding:12px 20px;display:none;align-items:center;justify-content:space-between;gap:12px;z-index:5}
+#barre.visible{display:flex}
+#barre .btn{padding:10px 18px}
+
+dialog{border:0;border-radius:12px;padding:24px;width:min(480px,92vw);font-family:var(--texte)}
+dialog::backdrop{background:rgba(14,59,67,.6)}
+dialog h2{font-size:1.5rem}
+.ligne{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--ligne)}
+.qte button{width:32px;height:32px;border-radius:6px;border:1px solid var(--ligne);background:#fff;font-size:1.1rem;cursor:pointer}
+.qte span{display:inline-block;min-width:28px;text-align:center}
+.total{display:flex;justify-content:space-between;font-family:var(--titre);font-weight:800;margin:16px 0}
+dialog label{display:block;font-size:.95rem;margin-bottom:12px}
+dialog input{width:100%;padding:10px;border:1px solid var(--ligne);border-radius:6px;font:inherit}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1 id="nom">Long Riche</h1>
+    <p id="slogan">Des produits choisis avec soin. Commandez en quelques clics sur WhatsApp.</p>
+    <a class="btn" href="#produits">Voir les produits</a>
+  </div>
+</header>
+
+<section id="produits">
+  <div class="wrap">
+    <h2>Nos produits</h2>
+    <div class="grille" id="grille"></div>
+  </div>
+</section>
+
+<section class="paiement">
+  <div class="wrap">
+    <h2>Comment commander</h2>
+    <ul>
+      <li>Ajoutez vos produits à la commande.</li>
+      <li>Envoyez la commande par WhatsApp : nous confirmons le prix et la livraison.</li>
+      <li id="modes">Paiement par Mobile Money ou à la livraison.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><span id="nom2">Long Riche</span> · Comores</p>
+    <p><a id="lienWa" href="#">Nous écrire sur WhatsApp</a></p>
+  </div>
+</footer>
+
+<div id="barre">
+  <span id="resume"></span>
+  <button class="btn" id="ouvrir">Voir ma commande</button>
+</div>
+
+<dialog id="panier">
+  <h2>Ma commande</h2>
+  <div id="lignes"></div>
+  <div class="total"><span>Total</span><span id="total"></span></div>
+  <label>Votre nom
+    <input id="client" autocomplete="name">
+  </label>
+  <label>Lieu de livraison
+    <input id="lieu" autocomplete="street-address">
+  </label>
+  <div class="actions">
+    <button class="btn" id="envoyer">Envoyer sur WhatsApp</button>
+    <button class="btn fin" id="fermer">Continuer mes achats</button>
+  </div>
+</dialog>
+
+<script>
+/* ============ À MODIFIER ============ */
+const CONFIG = {
+  nom: "Long Riche",
+  slogan: "Des produits choisis avec soin. Commandez en quelques clics sur WhatsApp.",
+  whatsapp: "2693000000",          // numéro avec indicatif, sans + ni espaces
+  devise: "KMF",
+  modesPaiement: "Paiement par Mobile Money ou à la livraison."
+};
+
+const PRODUITS = [
+  { nom: "Produit 1", prix: 2500, description: "Décrivez votre produit en une phrase.", image: "" },
+  { nom: "Produit 2", prix: 5000, description: "Décrivez votre produit en une phrase.", image: "" },
+  { nom: "Produit 3", prix: 7500, description: "Décrivez votre produit en une phrase.", image: "" }
+  // image : mettez le chemin d'une photo, par exemple "photos/produit1.jpg"
+];
+/* ====================================== */
+
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString("fr-FR") + " " + CONFIG.devise;
+const panier = {};
+
+document.title = CONFIG.nom;
+$("nom").textContent = $("nom2").textContent = CONFIG.nom;
+$("slogan").textContent = CONFIG.slogan;
+$("modes").textContent = CONFIG.modesPaiement;
+$("lienWa").href = "https://wa.me/" + CONFIG.whatsapp;
+
+$("grille").innerHTML = PRODUITS.map((p, i) => `
+  <article class="produit">
+    <div class="visuel">${p.image ? `<img src="${p.image}" alt="${p.nom}" loading="lazy">` : p.nom.charAt(0)}</div>
+    <div class="infos">
+      <h3>${p.nom}</h3>
+      <p>${p.description}</p>
+      <span class="prix">${fmt(p.prix)}</span>
+      <button class="btn sombre" data-i="${i}">Ajouter à la commande</button>
+    </div>
+  </article>`).join("");
+
+$("grille").addEventListener("click", e => {
+  const b = e.target.closest("button[data-i]");
+  if (!b) return;
+  const i = b.dataset.i;
+  panier[i] = (panier[i] || 0) + 1;
+  maj();
+});
+
+function totaux(){
+  let n = 0, t = 0;
+  for (const i in panier){ n += panier[i]; t += panier[i] * PRODUITS[i].prix; }
+  return { n, t };
+}
+
+function maj(){
+  const { n, t } = totaux();
+  $("barre").classList.toggle("visible", n > 0);
+  $("resume").textContent = n + (n > 1 ? " articles" : " article") + " · " + fmt(t);
+  $("lignes").innerHTML = Object.keys(panier).map(i => `
+    <div class="ligne">
+      <span>${PRODUITS[i].nom}</span>
+      <span class="qte">
+        <button data-m="${i}" aria-label="Retirer un ${PRODUITS[i].nom}">−</button>
+        <span>${panier[i]}</span>
+        <button data-p="${i}" aria-label="Ajouter un ${PRODUITS[i].nom}">+</button>
+      </span>
+    </div>`).join("");
+  $("total").textContent = fmt(t);
+  if (n === 0 && $("panier").open) $("panier").close();
+}
+
+$("lignes").addEventListener("click", e => {
+  const m = e.target.dataset.m, p = e.target.dataset.p;
+  if (m !== undefined){ panier[m]--; if (panier[m] <= 0) delete panier[m]; }
+  if (p !== undefined){ panier[p]++; }
+  maj();
+});
+
+$("ouvrir").onclick = () => $("panier").showModal();
+$("fermer").onclick = () => $("panier").close();
+
+$("envoyer").onclick = () => {
+  const { t } = totaux();
+  const lignes = Object.keys(panier).map(i => "- " + panier[i] + " x " + PRODUITS[i].nom + " (" + fmt(PRODUITS[i].prix) + ")");
+  const msg = "Bonjour, je souhaite commander :\n" + lignes.join("\n") +
+    "\nTotal : " + fmt(t) +
+    "\nNom : " + ($("client").value || "-") +
+    "\nLivraison : " + ($("lieu").value || "-");
+  window.open("https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(msg), "_blank");
+};
+</script>
+</body>
+</html>
